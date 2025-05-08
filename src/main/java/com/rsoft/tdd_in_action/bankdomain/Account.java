@@ -18,6 +18,12 @@ public class Account {
         this.totalBalance = balance;
     }
 
+    public Account(String accountNumber , String holderName){
+        this.accountNumber = accountNumber;
+        this.holderName = holderName;
+        totalBalance = new BigDecimal("0");
+    }
+
     public String getHolderName() {
         return holderName;
     }

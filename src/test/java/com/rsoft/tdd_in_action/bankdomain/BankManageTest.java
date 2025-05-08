@@ -23,16 +23,6 @@ class BankManageTest {
 
     }
 
-//    @Test
-//    public void should_create_bank_account_if_name_should_be_dublicate(){
-//        Account trup = new Account(UUID.randomUUID().toString(), "trup", new BigDecimal("500"));
-//        BankManage bankManage = new BankManage();
-//
-//        Assertions.assertThatThrownBy(() -> bankManage.createAccount(null))
-//                .isInstanceOf(CustomException.class)
-//                .hasMessage("account holder");
-//    }
-
     @Test
     public void should_deposit_bank_account(){
         Account trup = new Account(UUID.randomUUID().toString(), "trup", new BigDecimal("500"));
@@ -61,4 +51,21 @@ class BankManageTest {
                 .hasMessage("balance is not suffecient");
     }
 
+    @Test
+    public void should_print_transaction_statement(){
+        BankManage bankManage = new BankManage();
+        Account trup = new Account(UUID.randomUUID().toString(), "trup");
+        bankManage.createAccount(trup);
+        bankManage.deposite(new BigDecimal("500"), trup.getAccountNumber());
+        bankManage.withDraw(new BigDecimal(200), trup.getAccountNumber());
+
+        String printStatment = bankManage.printStatment();
+        Assertions.assertThat(printStatment).isEqualTo("""
+                DATE       | AMOUNT | PROCESS | BALANCE 
+                14/05/2025 | 500  | DEPOSITE | 500 
+                15/05/2025 | 200  | WITHDRAW | 300
+                
+                """);
+
+    }
 }
